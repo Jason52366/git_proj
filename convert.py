@@ -15,6 +15,9 @@ def load_file(file_name: str, encoding="cp950") -> list:
 
 def write_file(file_name: str, text: str):
     save_name = f"new_{file_name}"
+    """
+    Something2
+    """
     with open(save_name, "w+", encoding="utf8") as handler:
         handler.write(text)
 
