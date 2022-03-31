@@ -1,21 +1,36 @@
+""" Convert Chinese File Encoding To utf8
+Returns:
+    None
+"""
 import sys
 
-def load_file(_fn, encoding="cp950"):
-  _msg_lst = list()
-  with open(_fn, 'r', encoding=encoding) as _f:
-    for l in _f:
-      _msg_lst.append(l)
-  return _msg_lst
+
+def load_file(file_name: str, encoding="cp950") -> list:
+    lines = []
+    with open(file_name, 'r', encoding=encoding) as handler:
+        for line in handler:
+            lines.append(line)
+    return lines
+
+
+def write_file(file_name: str, text: str):
+    save_name = f"new_{file_name}"
+    with open(save_name, "w+", encoding="utf8") as handler:
+        handler.write(text)
+
+
+def main() -> None:
+    file_names = sys.argv[1:]
+    for file_name in file_names:
+        lines = load_file(file_name, encoding="cp950")
+        encoded_text = ''.join(lines)
+        write_file(file_name, encoded_text)
+
 
 if __name__ == '__main__':
-  fn_list = sys.argv[1:]
-  # fn_list = [ "BSR_35EXCD.zip"
-  # ]
+    # fn_list = [ "BSR_35EXCD.zip"
+    # ]
 
-  # 如果 cp950無法的話可以試試看 "big5hkscs"
-  # https://docs.python.org/2.4/lib/standard-encodings.html
-
-  for fn in fn_list:
-    msg_list = load_file(fn, encoding="cp950")
-    with open("new_{}".format(fn), "w+") as new_f:
-      new_f.write(''.join(msg_list))
+    # 如果 cp950無法的話可以試試看 "big5hkscs"
+    # https://docs.python.org/2.4/lib/standard-encodings.html
+    main()
